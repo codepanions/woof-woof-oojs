@@ -1,3 +1,5 @@
+// No longer attached to the app. This is just a reference for Vanilla JS functionality.
+
 document.addEventListener('DOMContentLoaded', () => {
   let dogData = []
   const dogBar = document.querySelector('#dog-bar')
