@@ -28,26 +28,26 @@ document.addEventListener('DOMContentLoaded', () => {
       if (e.target.className === 'edit' || e.target.dataset.action === 'edit') {
         console.log(e.target)
         const clickedDogId = parseInt(e.target.dataset.id)
-        const foundDog = Dog.findDog(clickedDogId) //find the dog object based on the id found in the clicked edit button
-        // pre-fill the form data:
+        const foundDog = Dog.findDog(clickedDogId) // Find the dog object based on the id found in the clicked edit button.
+        // Pre-fill the form data.
         dogNameInput.value = foundDog.name
         dogImgInput.value = foundDog.image
         goodDogInput.checked = foundDog.isGoodDog
-        dogForm.dataset.id = foundDog.id //store the dog id in the form so we can PATCH with that id later
+        dogForm.dataset.id = foundDog.id // Store the dog id in the form so we can PATCH with that id later.
       }
     })
 
 // PATCH REQUEST TO UPDATE DOG
     dogForm.addEventListener('submit', (e) => {
       e.preventDefault()
-      const updateDogId = e.target.dataset.id //don't need to parseInt because we are interpolating the id into a url string
+      const updateDogId = e.target.dataset.id // We don't need to parseInt because we are interpolating the id into a URL string.
       fetch(`http://localhost:3000/pups/${updateDogId}`, {
         method: 'PATCH',
         headers: {
-          'Content-Type': 'application/json' //MIME type we're sending to the server
+          'Content-Type': 'application/json' // MIME type we're sending to the server.
         },
         body: JSON.stringify({
-          // form inputs were stored in vars at the top of DOMContentLoaded event handler (callback Fn)
+          // The form inputs were stored in variables at the top of DOMContentLoaded event handler. (This is a callback function.)
           name: dogNameInput.value,
           image: dogImgInput.value,
           isGoodDog: goodDogInput.checked
@@ -55,8 +55,8 @@ document.addEventListener('DOMContentLoaded', () => {
       })
       .then((r) => r.json())
       .then((updatedDogJSON) => {
-        const updatedPup = Dog.updateDog(updatedDogJSON) //delegate updating dogs to the Dog class
-        dogInfo.innerHTML = updatedPup.renderDetails() //render the changes so the DOM is in sync with our data
+        const updatedPup = Dog.updateDog(updatedDogJSON) // Delegate updating dogs to the Dog class.
+        dogInfo.innerHTML = updatedPup.renderDetails() // Render the changes so the DOM is in sync with our data.
       })
     })
 })
