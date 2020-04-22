@@ -1,0 +1,8 @@
+{
+  "name": "woof-woof-oojs",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:meg-gutshall/woof-woof-oojs.git",
+  "author": "Meg Gutshall <meghan.gutshall@gmail.com>",
+  "license": "MIT"
+}
