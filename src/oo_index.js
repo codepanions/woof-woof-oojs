@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
   fetch('http://localhost:3000/pups')
     .then(resp => resp.json())
     .then(dogDataJSON => {
-      dogDataJSON.forEach(dog => {
+      dogDataJSON.forEach(function(dog) {
         const newPup = new Dog(dog)
         dogBar.innerHTML += newPup.renderSpan()
       })
