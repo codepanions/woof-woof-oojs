@@ -7,10 +7,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const goodDogInput = document.querySelector('#good-dog-input')
 
 // INITIAL FETCH
-  fetch('http://localhost:3000/pups', { method: 'GET' })
-    .then(/*function*/(resp) => resp.json())
-    .then(/*function*/(dogDataJSON) => {
-      dogDataJSON.forEach(/*function*/(dog) => {
+  fetch('http://localhost:3000/pups')
+    .then(resp => resp.json())
+    .then(dogDataJSON => {
+      dogDataJSON.forEach(dog => {
         const newPup = new Dog(dog)
         dogBar.innerHTML += newPup.renderSpan()
       })

@@ -126,18 +126,10 @@ document.addEventListener('DOMContentLoaded', function () {
   var dogImgInput = document.querySelector('#dog-img-input');
   var goodDogInput = document.querySelector('#good-dog-input'); // INITIAL FETCH
 
-  fetch('http://localhost:3000/pups', {
-    method: 'GET'
-  }).then(
-  /*function*/
-  function (resp) {
+  fetch('http://localhost:3000/pups').then(function (resp) {
     return resp.json();
-  }).then(
-  /*function*/
-  function (dogDataJSON) {
-    dogDataJSON.forEach(
-    /*function*/
-    function (dog) {
+  }).then(function (dogDataJSON) {
+    dogDataJSON.forEach(function (dog) {
       var newPup = new Dog(dog);
       dogBar.innerHTML += newPup.renderSpan();
     });
