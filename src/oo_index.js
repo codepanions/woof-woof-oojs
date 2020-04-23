@@ -1,3 +1,5 @@
+import Dog from "./dog"
+
 document.addEventListener('DOMContentLoaded', () => {
   const dogBar = document.querySelector('#dog-bar')
   const dogInfo = document.querySelector('#dog-info')

@@ -117,7 +117,78 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"src/oo_index.js":[function(require,module,exports) {
+})({"src/dog.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var Dog = /*#__PURE__*/function () {
+  _createClass(Dog, null, [{
+    key: "findDog",
+    // `static` creates a class method in the form `Dog.methodName()`.
+    value: function findDog(id) {
+      return this.allDogs.find(function (dog) {
+        return dog.id === id;
+      }); // `this` will be Dog when invoked like `Dog.findDog(1)`.
+    }
+  }, {
+    key: "updateDog",
+    value: function updateDog(updatedDogData) {
+      var pupToUpdate = this.findDog(updatedDogData.id); // If we invoke `Dog.updateDog(newDogJSON)`, `this` will be Dog class.
+
+      pupToUpdate.name = updatedDogData.name;
+      pupToUpdate.image = updatedDogData.image;
+      pupToUpdate.isGoodDog = updatedDogData.isGoodDog;
+      return pupToUpdate; // Return the updated dog instance for method chaining (i.e. `pupToUpdate.renderSpan()`, `pupToUpdate.renderDetails()`, etc.).
+    }
+  }]);
+
+  function Dog(dogDataObj) {
+    _classCallCheck(this, Dog);
+
+    this.id = dogDataObj.id;
+    this.name = dogDataObj.name;
+    this.image = dogDataObj.image;
+    this.isGoodDog = dogDataObj.isGoodDog;
+    Dog.allDogs.push(this);
+  }
+
+  _createClass(Dog, [{
+    key: "renderSpan",
+    value: function renderSpan() {
+      return "<span data-id=\"".concat(this.id, "\">").concat(this.name, "</span>");
+    }
+  }, {
+    key: "renderDetails",
+    value: function renderDetails() {
+      var isGoodDogString = this.isGoodDog ? 'Good Dog!' : 'Bad Dog!';
+      return "<img src=\"".concat(this.image, "\" >\n          <h2>").concat(this.name, "</h2>\n          <button>").concat(isGoodDogString, "</button>\n          <button class=\"edit\" data-id=\"").concat(this.id, "\" data-action=\"edit\">Edit this Dog!</button>\n          ");
+    }
+  }]);
+
+  return Dog;
+}();
+
+Dog.allDogs = []; // Recall that an ES6 class is just a function. Functions are also objects (object is part of their prototype chain), therefore, we can set key/value pairs on a function just like we can on any other object.
+
+var _default = Dog;
+exports.default = _default;
+},{}],"src/oo_index.js":[function(require,module,exports) {
+"use strict";
+
+var _dog = _interopRequireDefault(require("./dog"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 document.addEventListener('DOMContentLoaded', function () {
   var dogBar = document.querySelector('#dog-bar');
   var dogInfo = document.querySelector('#dog-info');
@@ -130,14 +201,16 @@ document.addEventListener('DOMContentLoaded', function () {
     return resp.json();
   }).then(function (dogDataJSON) {
     dogDataJSON.forEach(function (dog) {
-      var newPup = new Dog(dog);
+      var newPup = new _dog.default(dog);
       dogBar.innerHTML += newPup.renderSpan();
     });
   }); // RENDER DETAILS OF CLICKED DOG
 
   dogBar.addEventListener('click', function (e) {
     var clickedDogId = parseInt(e.target.dataset.id);
-    var foundDog = Dog.findDog(clickedDogId);
+
+    var foundDog = _dog.default.findDog(clickedDogId);
+
     dogInfo.innerHTML = foundDog.renderDetails();
   }); // CLICK EDIT DOG + PRE-FILL FORM
 
@@ -145,8 +218,10 @@ document.addEventListener('DOMContentLoaded', function () {
     if (e.target.className === 'edit' || e.target.dataset.action === 'edit') {
       console.log(e.target);
       var clickedDogId = parseInt(e.target.dataset.id);
-      var foundDog = Dog.findDog(clickedDogId); // Find the dog object based on the id found in the clicked edit button.
+
+      var foundDog = _dog.default.findDog(clickedDogId); // Find the dog object based on the id found in the clicked edit button.
       // Pre-fill the form data.
+
 
       dogNameInput.value = foundDog.name;
       dogImgInput.value = foundDog.image;
@@ -174,13 +249,14 @@ document.addEventListener('DOMContentLoaded', function () {
     }).then(function (r) {
       return r.json();
     }).then(function (updatedDogJSON) {
-      var updatedPup = Dog.updateDog(updatedDogJSON); // Delegate updating dogs to the Dog class.
+      var updatedPup = _dog.default.updateDog(updatedDogJSON); // Delegate updating dogs to the Dog class.
+
 
       dogInfo.innerHTML = updatedPup.renderDetails(); // Render the changes so the DOM is in sync with our data.
     });
   });
 });
-},{}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./dog":"src/dog.js"}],"../../../../../.config/yarn/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -208,7 +284,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59406" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63556" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
@@ -384,5 +460,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["node_modules/parcel-bundler/src/builtins/hmr-runtime.js","src/oo_index.js"], null)
+},{}]},{},["../../../../../.config/yarn/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","src/oo_index.js"], null)
 //# sourceMappingURL=/oo_index.38628bca.js.map

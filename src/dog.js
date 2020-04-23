@@ -35,3 +35,5 @@ class Dog {
 }
 
 Dog.allDogs = [] // Recall that an ES6 class is just a function. Functions are also objects (object is part of their prototype chain), therefore, we can set key/value pairs on a function just like we can on any other object.
+
+export default Dog
